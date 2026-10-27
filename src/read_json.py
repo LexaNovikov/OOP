@@ -1,11 +1,11 @@
 import json
 import os
-from main import Category, Product
+from src.main import Category, Product
 
 base = os.path.dirname(os.path.dirname(__file__))
 
 
-def read_json(path: str = os.path.join(base, "data", "products.json")):
+def read_json(path: str = os.path.join(base, "data", "products.json")) -> list:
     with open(path) as json_file:
         categories = json.load(json_file)
         categories_list = []
