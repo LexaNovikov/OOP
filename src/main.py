@@ -66,12 +66,13 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         self._products.append(product)
+        self.product_count += 1
 
     @classmethod
     def get_all_categories(cls) -> list:
         return Category.__all_categories
-
-    def get_products(self) -> str:
+    @property
+    def products(self) -> str:
         ans = ""
         for product in self._products:
             ans += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
@@ -134,8 +135,8 @@ if __name__ == "__main__":
     print(product5.description)
     print(product5.description)
     smartphones.add_product(product5)
-    test = smartphones.get_products
+    test = smartphones.products
     print(test)
     print(Category.get_all_categories())
     product6 = Product.new_product({"name": "Имя", "description": "Описание", "price": 5.0, "quantity": 15})
-    print(smartphones.get_products)
+    print(smartphones.products)

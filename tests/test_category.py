@@ -46,4 +46,4 @@ def test_get_all_categories() -> None:
 
 
 def test_get_products() -> None:
-    assert smartphones.get_products() == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
+    assert smartphones.products == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
