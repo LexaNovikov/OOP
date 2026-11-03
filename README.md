@@ -20,3 +20,5 @@
 ```test_category.py``` - модуль для тестирования методов класса Category
 
 ```test_product.py``` - модуль для тестирования методов класса Product
+
+```test_categoryIter.py``` - модуль для тестирования класса-итератора categoryIter
