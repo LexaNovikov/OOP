@@ -10,6 +10,10 @@ def test_product_init() -> None:
     assert product1.price == 5000
     assert product1.quantity == 5
 
+def test_product_str(samsung) -> None:
+    assert samsung.__str__() == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
+def test_add_product(samsung, xiaomi) -> None:
+    assert samsung+xiaomi == 1334000.0
 
 @patch("builtins.input")
 @patch("builtins.print")
@@ -17,7 +21,7 @@ def test_new_product(mock_print: MagicMock, mock_input: MagicMock) -> None:
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    smartphones = Category(
+    new_smartphones = Category(
         "Смартфоны",
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [product1, product2, product3],
@@ -29,10 +33,10 @@ def test_new_product(mock_print: MagicMock, mock_input: MagicMock) -> None:
     assert result.description == "512GB, Gray space"
     assert result.price == 200000.0
     assert result.quantity == 16
-    assert smartphones._products[1].name == "Iphone 15"
-    assert smartphones._products[1].description == "512GB, Gray space"
-    assert smartphones._products[1].price == 200000.0
-    assert smartphones._products[1].quantity == 16
+    assert new_smartphones._products[1].name == "Iphone 15"
+    assert new_smartphones._products[1].description == "512GB, Gray space"
+    assert new_smartphones._products[1].price == 200000.0
+    assert new_smartphones._products[1].quantity == 16
     mock_print.assert_called_once_with(
         "Некорректный ввод. Введите y или n\n"
         "Новая цена 200000.0 меньше предыдущей 210000.0\n"
@@ -46,7 +50,7 @@ def test_new_product_no(mock_print: MagicMock, mock_input: MagicMock) -> None:
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    smartphones = Category(
+    new_smartphones = Category(
         "Смартфоны",
         "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [product1, product2, product3],
@@ -58,10 +62,10 @@ def test_new_product_no(mock_print: MagicMock, mock_input: MagicMock) -> None:
     assert result.description == "512GB, Gray space"
     assert result.price == 210000.0
     assert result.quantity == 32
-    assert smartphones._products[1].name == "Iphone 15"
-    assert smartphones._products[1].description == "512GB, Gray space"
-    assert smartphones._products[1].price == 210000.0
-    assert smartphones._products[1].quantity == 32
+    assert new_smartphones._products[1].name == "Iphone 15"
+    assert new_smartphones._products[1].description == "512GB, Gray space"
+    assert new_smartphones._products[1].price == 210000.0
+    assert new_smartphones._products[1].quantity == 32
     mock_print.assert_called_once_with(
         "Некорректный ввод. Введите y или n\n"
         "Новая цена 200000.0 меньше предыдущей 210000.0\n"
