@@ -13,25 +13,31 @@ class Category:
         Category.category_count += 1
         self.product_count = len(products)
         Category.__all_categories.append(self)
-    def __str__(self):
+
+    def __str__(self) -> str:
         quantity = 0
         for product in self._products:
             quantity += product.quantity
         return f"{self.name}, количество продуктов: {quantity} шт."
-    def add_product(self, product) -> None:
+
+    def add_product(self, product: Product) -> None:
         if issubclass(type(product), Product):
             self._products.append(product)
             self.product_count += 1
+        else:
+            raise TypeError("Объект не является продуктом")
 
     @classmethod
     def get_all_categories(cls) -> list:
         return Category.__all_categories
+
     @property
     def products(self) -> str:
         ans = ""
         for product in self._products:
             ans += product.__str__()
         return ans
+
 
 class Product:
     name: str
@@ -44,12 +50,15 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
-    def __str__(self):
+
+    def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+
     def __add__(self, other: Product) -> float | int:
         if type(other) is type(self):
-            return self.price*self.quantity + other.price*other.quantity
-        raise TypeError
+            return self.price * self.quantity + other.price * other.quantity
+        raise TypeError("Нельзя сложить стоимость продуктов разных категорий")
+
     @property
     def price(self) -> float:
         return self.__price
