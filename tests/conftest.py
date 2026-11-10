@@ -1,6 +1,10 @@
 import pytest
 
-from src.main import Category, Product
+from src.classes import Category, Product
+from src.lawngrass import LawnGrass
+from src.smartphone import Smartphone
+
+
 @pytest.fixture
 def smartphones() -> Category:
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
@@ -12,12 +16,18 @@ def smartphones() -> Category:
         [product1, product2, product3],
     )
     return smartphones
+
+
 @pytest.fixture
 def samsung() -> Product:
     return Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+
+
 @pytest.fixture
 def xiaomi() -> Product:
     return Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+
+
 @pytest.fixture
 def headphones() -> Category:
     product1 = Product("realme airbuds 3", "Крутые наушники", 5000, 5)
@@ -29,3 +39,13 @@ def headphones() -> Category:
         [product1, product2, product3],
     )
     return headphones
+
+
+@pytest.fixture
+def green_grass() -> LawnGrass:
+    return LawnGrass("grass", "default grass", 5000, 5, "Russia", 1, "green")
+
+
+@pytest.fixture
+def xiaomi_13() -> Smartphone:
+    return Smartphone("xiaomi 13", "supersmartphone", 25000, 5, 5, "xiaomi 13", 256, "green")

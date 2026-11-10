@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock, patch
 
-from src.main import Category, Product
+import pytest
+
+from src.classes import Category, Product
+from src.lawngrass import LawnGrass
+from src.smartphone import Smartphone
 
 
 def test_product_init() -> None:
@@ -10,10 +14,20 @@ def test_product_init() -> None:
     assert product1.price == 5000
     assert product1.quantity == 5
 
-def test_product_str(samsung) -> None:
+
+def test_product_str(samsung: Product) -> None:
     assert samsung.__str__() == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
-def test_add_product(samsung, xiaomi) -> None:
-    assert samsung+xiaomi == 1334000.0
+
+
+def test_add_product(samsung: Product, xiaomi: Product) -> None:
+    assert samsung + xiaomi == 1334000.0
+
+
+def test_add_product_error(xiaomi_13: Smartphone, green_grass: LawnGrass) -> None:
+    with pytest.raises(TypeError) as e:
+        xiaomi_13 + green_grass
+    assert str(e.value) == "Нельзя сложить стоимость продуктов разных категорий"
+
 
 @patch("builtins.input")
 @patch("builtins.print")
