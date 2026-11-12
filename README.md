@@ -22,6 +22,8 @@
 
 ```lawngrass.py``` - модуль с классом LawnGrass
 
+```mixin.py``` - модуль с классом-mixin Mixin
+
 ```smartphone.py``` - модуль с классом Smartphone
 ### tests - пакет, содержащий модули тестирования кода
 ```conftest.py``` - модуль, содержащий фикстуры 
@@ -36,3 +38,4 @@
 
 ```test_smartphone``` - модуль для тестирования методов класса Smartphone
 
+```test_mixin``` - модуль для тестирования методов класса Smartphone
