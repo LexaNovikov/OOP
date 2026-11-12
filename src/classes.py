@@ -1,3 +1,7 @@
+from abc import ABC
+
+from src.mixin import Mixin
+
 class Category:
     name: str
     description: str
@@ -38,22 +42,16 @@ class Category:
             ans += product.__str__()
         return ans
 
-
-class Product:
-    name: str
-    description: str
-    __price: float
-    quantity: int
-
+class BaseProduct(ABC):
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
-
     def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
-
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
     def __add__(self, other: Product) -> float | int:
         if type(other) is type(self):
             return self.price * self.quantity + other.price * other.quantity
@@ -70,6 +68,16 @@ class Product:
         else:
             print("Цена не должна быть нулевая или отрицательная")
 
+    @classmethod
+    def new_product(cls, product_dict: dict) -> Product:
+        pass
+class Product(Mixin, BaseProduct):
+    name: str
+    description: str
+    __price: float
+    quantity: int
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        super().__init__(name, description, price, quantity)
     @classmethod
     def new_product(cls, product_dict: dict) -> Product:
         product = cls(
@@ -95,3 +103,8 @@ class Product:
                     product.quantity += product_from_list.quantity
                     category._products[idx] = product
         return product
+
+pr = Product.new_product({"name": "mama",
+                          "description": "mama",
+                          "price": 100,
+                          "quantity": 5})
