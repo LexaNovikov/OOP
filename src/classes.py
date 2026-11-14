@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from src.mixin import Mixin
 
@@ -24,7 +24,7 @@ class Category:
             quantity += product.quantity
         return f"{self.name}, количество продуктов: {quantity} шт."
 
-    def add_product(self, product: Product) -> None:
+    def add_product(self, product) -> None:
         if issubclass(type(product), Product):
             self._products.append(product)
             self.product_count += 1
@@ -43,16 +43,41 @@ class Category:
         return ans
 
 class BaseProduct(ABC):
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
+    @abstractmethod
+    def __repr__(self) -> str:
+        pass
+    @abstractmethod
+    def __add__(self, other) -> float | int:
+        pass
+    @property
+    @abstractmethod
+    def price(self):
+        pass
+    @price.setter
+    @abstractmethod
+    def price(self, price: float) -> None:
+        pass
+    @classmethod
+    @abstractmethod
+    def new_product(cls, product_dict: dict):
+        pass
+class Product(Mixin, BaseProduct):
+    name: str
+    description: str
+    __price: float
+    quantity: int
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__(name, description, price, quantity)
     def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
-    def __add__(self, other: Product) -> float | int:
+    def __add__(self, other) -> float | int:
         if type(other) is type(self):
             return self.price * self.quantity + other.price * other.quantity
         raise TypeError("Нельзя сложить стоимость продуктов разных категорий")
@@ -67,19 +92,8 @@ class BaseProduct(ABC):
             self.__price = price
         else:
             print("Цена не должна быть нулевая или отрицательная")
-
     @classmethod
-    def new_product(cls, product_dict: dict) -> Product:
-        pass
-class Product(Mixin, BaseProduct):
-    name: str
-    description: str
-    __price: float
-    quantity: int
-    def __init__(self, name: str, description: str, price: float, quantity: int):
-        super().__init__(name, description, price, quantity)
-    @classmethod
-    def new_product(cls, product_dict: dict) -> Product:
+    def new_product(cls, product_dict: dict):
         product = cls(
             product_dict["name"], product_dict["description"], product_dict["price"], product_dict["quantity"]
         )
@@ -103,8 +117,3 @@ class Product(Mixin, BaseProduct):
                     product.quantity += product_from_list.quantity
                     category._products[idx] = product
         return product
-
-pr = Product.new_product({"name": "mama",
-                          "description": "mama",
-                          "price": 100,
-                          "quantity": 5})
