@@ -43,23 +43,6 @@ class Category:
         return ans
 
 class BaseProduct(ABC):
-    @abstractmethod
-    def __str__(self) -> str:
-        pass
-    @abstractmethod
-    def __repr__(self) -> str:
-        pass
-    @abstractmethod
-    def __add__(self, other) -> float | int:
-        pass
-    @property
-    @abstractmethod
-    def price(self):
-        pass
-    @price.setter
-    @abstractmethod
-    def price(self, price: float) -> None:
-        pass
     @classmethod
     @abstractmethod
     def new_product(cls, product_dict: dict):
