@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 from src.mixin import Mixin
 
+
 class Category:
     name: str
     description: str
@@ -30,14 +31,16 @@ class Category:
             self.product_count += 1
         else:
             raise TypeError("Объект не является продуктом")
+
     def middle_price(self):
         try:
             products_sum = 0
             for product in self._products:
-                products_sum+= product.price*product.quantity
+                products_sum += product.price * product.quantity
             return products_sum / self.product_count
         except ZeroDivisionError:
             return 0
+
     @classmethod
     def get_all_categories(cls) -> list:
         return Category.__all_categories
@@ -49,24 +52,30 @@ class Category:
             ans += product.__str__()
         return ans
 
+
 class BaseProduct(ABC):
     @classmethod
     @abstractmethod
     def new_product(cls, product_dict: dict):
         pass
+
+
 class Product(Mixin, BaseProduct):
     name: str
     description: str
     __price: float
     quantity: int
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
         super().__init__(name, description, price, quantity)
+
     def __str__(self) -> str:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+
     def __add__(self, other) -> float | int:
         if type(other) is type(self):
             return self.price * self.quantity + other.price * other.quantity
@@ -82,11 +91,13 @@ class Product(Mixin, BaseProduct):
             self.__price = price
         else:
             raise ValueError("Цена не должна быть нулевая или отрицательная")
+
     @classmethod
     def new_product(cls, product_dict: dict):
         product = cls(
             product_dict["name"], product_dict["description"], product_dict["price"], product_dict["quantity"]
         )
+
         for category in Category.get_all_categories():
             for idx, product_from_list in enumerate(category._products):
                 if product_from_list.name == product.name:

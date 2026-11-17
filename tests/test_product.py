@@ -7,7 +7,6 @@ from src.lawngrass import LawnGrass
 from src.smartphone import Smartphone
 
 
-
 def test_product_init() -> None:
     product1 = Product("realme airbuds 3", "Крутые наушники", 5000, 5)
     assert product1.name == "realme airbuds 3"
@@ -104,6 +103,7 @@ def test_setter() -> None:
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product1.price = 200000.0
     assert product1.price == 200000.0
+
 
 def test_setter_error() -> None:
     with pytest.raises(ValueError) as e:
