@@ -10,6 +10,10 @@ smartphones = Category(
 )
 
 
+def test_middle_price() -> None:
+    assert smartphones.middle_price() == 0
+
+
 def test_category_init(headphones: Category) -> None:
     assert headphones.name == "Наушники"
     assert headphones.description == "Штуки, которые надел и никого не слышишь"
@@ -28,6 +32,10 @@ def test_add_product() -> None:
     assert smartphones._products[0].description == "256GB, Серый цвет, 200MP камера"
     assert smartphones._products[0].price == 180000.0
     assert smartphones._products[0].quantity == 5
+
+
+def test_middle_price_nice() -> None:
+    assert smartphones.middle_price() == 900000.0
 
 
 def test_add_product_with_error() -> None:
