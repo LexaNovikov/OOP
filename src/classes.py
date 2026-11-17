@@ -30,7 +30,14 @@ class Category:
             self.product_count += 1
         else:
             raise TypeError("Объект не является продуктом")
-
+    def middle_price(self):
+        try:
+            products_sum = 0
+            for product in self._products:
+                products_sum+= product.price*product.quantity
+            return products_sum / self.product_count
+        except ZeroDivisionError:
+            return 0
     @classmethod
     def get_all_categories(cls) -> list:
         return Category.__all_categories
@@ -74,7 +81,7 @@ class Product(Mixin, BaseProduct):
         if price > 0:
             self.__price = price
         else:
-            print("Цена не должна быть нулевая или отрицательная")
+            raise ValueError("Цена не должна быть нулевая или отрицательная")
     @classmethod
     def new_product(cls, product_dict: dict):
         product = cls(
